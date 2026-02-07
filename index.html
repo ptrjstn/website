@@ -3,76 +3,72 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>useless</title>
+  <title>ptrjstn</title>
   <meta name="description" content="drops" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <main class="wrap">
-    <pre class="ascii" aria-hidden="true">
-+-----------------------------+
-|            useless          |
-+-----------------------------+
-    </pre>
+    <pre class="ascii" aria-hidden="true" data-ascii="header" data-title="ptrjstn"></pre>
 
-    <h1 class="sr-only">useless</h1>
+    <h1 class="sr-only">ptrjstn</h1>
 
     <section id="drops" class="block">
       <div class="label">drops</div>
 
-      <ul class="drops">
-        <li>
-          <a class="drop active" href="t01.html">
-            <span class="code">01</span>
-            <span class="title">haiku noun game</span>
-            <span class="status">active</span>
-          </a>
-        </li>
+      <div class="drops-fade">
+        <ul class="drops">
+          <li>
+            <a class="drop active" href="d001.html" aria-disabled="false">
+              <span class="code">001</span>
+              <span class="title">sumit - das spiel mit der quersumme</span>
+              <span class="status">active</span>
+            </a>
+          </li>
 
-        <li>
-          <a class="drop empty" href="t02.html" aria-disabled="false">
-            <span class="code">02</span>
-            <span class="title"></span>
-            <span class="status">empty</span>
-          </a>
-        </li>
+          <li>
+            <a class="drop active is-new" href="d002.html">
+              <span class="code">002</span>
+              <span class="title">haiku – finde die passenden nomen</span>
+              <span class="status">active</span>
+              <span class="burst-new" aria-hidden="true"><span class="star"><svg viewBox="0 0 100 100" role="presentation" focusable="false" aria-hidden="true"><path d="M50 2 L58 18 L75 7 L70 25 L89 22 L78 37 L98 40 L82 50 L98 60 L78 63 L89 78 L70 75 L75 93 L58 82 L50 98 L42 82 L25 93 L30 75 L11 78 L22 63 L2 60 L18 50 L2 40 L22 37 L11 22 L30 25 L25 7 L42 18 Z" /></svg></span><span class="txt">new</span></span>
+            </a>
+          </li>
 
-        <li>
-          <a class="drop empty" href="t03.html" aria-disabled="false">
-            <span class="code">03</span>
-            <span class="title"></span>
-            <span class="status">empty</span>
-          </a>
-        </li>
-      </ul>
+          <li>
+            <a class="drop empty" href="d003.html" aria-disabled="false">
+              <span class="code">003</span>
+              <span class="title"></span>
+              <span class="status">empty</span>
+            </a>
+          </li>
+
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">004</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">005</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">006</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">007</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">008</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">009</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">010</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">011</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">012</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">013</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">014</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">015</span><span class="title"></span><span class="status">empty</span></a></li>
+          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">016</span><span class="title"></span><span class="status">empty</span></a></li>
+        </ul>
+      </div>
     </section>
 
-    <pre class="ascii" aria-hidden="true">
-+-----------------------------+
-    </pre>
+    <pre class="ascii" aria-hidden="true" data-ascii="line"></pre>
 
-    <section id="about" class="block">
-      <div class="label">about</div>
-      <p class="text">arbeitsstand.</p>
-    </section>
+    <div id="sharedMeta"></div>
 
-    <section id="contact" class="block">
-      <div class="label">contact</div>
-      <p class="text">
-        <a href="mailto:hello@example.com">hello@example.com</a>
-      </p>
-    </section>
-
-    <footer class="foot">
-      <span class="muted">© <span id="year"></span></span>
-      <span class="muted">/</span>
-      <span class="muted">local</span>
-    </footer>
+    <div id="sharedFooter"></div>
   </main>
 
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
+  <script src="fragments.js"></script>
+  <script src="shell.js"></script>
 </body>
 </html>

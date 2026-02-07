@@ -1,4 +1,4 @@
-{
+window.HAIKU_DB = {
   "meta": {
     "title": "haiku rätsel datenbank",
     "language": "de",
@@ -558,4 +558,4 @@
       "translator": "chatgpt (cc0)"
     }
   ]
-}
+};

@@ -9,13 +9,12 @@
 
 <body>
   <main class="wrap">
-    <pre class="ascii">
-+-----------------------------+
-|            High-Q           |
-+-----------------------------+
-    </pre>
+    <pre class="ascii" data-ascii="header" data-title="ptrjstn"></pre>
 
-    <p class="text">High-Q — haiku noun game.</p>
+    <h1 class="sr-only">ptrjstn</h1>
+
+    <section class="page-content">
+        <p class="text">finde die passenden nomen.</p>
 
     <!-- Haiku (monospace) mit echten Inputs -->
     <div class="mono haiku" id="haiku" aria-label="haiku">
@@ -34,9 +33,19 @@
       <span class="muted">/</span>
       <a href="#" id="clearLink">clear</a>
     </p>
+    </section>
+
+    <pre class="ascii" aria-hidden="true" data-ascii="line"></pre>
+
+    <div id="sharedMeta"></div>
+
+    <div id="sharedFooter"></div>
   </main>
 
-    <script>
+  <script src="fragments.js"></script>
+  <script src="shell.js"></script>
+  <script src="haiku_db_30.js"></script>
+  <script>
     // Regeln:
     // - Es gibt genau 3 Lücken (Nomen).
     // - Zeile 2 hat 2 Lücken, Zeile 3 hat 1 Lücke.
@@ -132,9 +141,9 @@
     }
 
     function haikuFromDBItem(item) {
-      const l1 = item.text_visible?.[0] ?? "";
-      const l2 = item.text_visible?.[1] ?? "";
-      const l3 = item.text_visible?.[2] ?? "";
+      const l1 = String(item.text_visible?.[0] ?? "").toLowerCase();
+      const l2 = String(item.text_visible?.[1] ?? "").toLowerCase();
+      const l3 = String(item.text_visible?.[2] ?? "").toLowerCase();
 
       const t2 = lineToTokensWithSlots(l2, 0, 2);
       const t3 = lineToTokensWithSlots(l3, 2, 1);
@@ -143,7 +152,7 @@
         line1: l1,
         line2: t2.tokens,
         line3: t3.tokens,
-        answers: item.solution || [],
+        answers: (item.solution || []).map((v) => String(v || "").toLowerCase()),
         author: item.author || "",
         born: item.born ?? null,
         died: item.died ?? null
@@ -248,13 +257,38 @@
       current = haikuFromDBItem(raw);
       renderPuzzle(current);
     }
-
     async function loadDB() {
-      const res = await fetch(DB_URL, { cache: "no-store" });
-      if (!res.ok) throw new Error(`DB load failed: ${res.status}`);
-      const db = await res.json();
-      pool = Array.isArray(db?.haikus) ? db.haikus : [];
-      if (!pool.length) throw new Error("DB is empty.");
+      if (window.HAIKU_DB && Array.isArray(window.HAIKU_DB.haikus) && window.HAIKU_DB.haikus.length) {
+        pool = window.HAIKU_DB.haikus;
+        return;
+      }
+
+      const candidates = [
+        DB_URL,
+        "./" + DB_URL,
+        new URL(DB_URL, window.location.href).href,
+        new URL(DB_URL, document.baseURI).href
+      ];
+
+      let lastErr = null;
+      for (const url of [...new Set(candidates)]) {
+        try {
+          const res = await fetch(url, { cache: "no-store" });
+          if (!res.ok) {
+            lastErr = new Error("DB load failed (" + url + "): " + res.status);
+            continue;
+          }
+
+          const db = await res.json();
+          pool = Array.isArray(db && db.haikus) ? db.haikus : [];
+          if (pool.length) return;
+          lastErr = new Error("DB is empty (" + url + ").");
+        } catch (err) {
+          lastErr = err;
+        }
+      }
+
+      throw lastErr || new Error("DB load failed.");
     }
 
     nextLink.addEventListener("click", (e) => {
@@ -279,56 +313,41 @@
   </script>
 
   <style>
-    /* High-Q – modern mobile game meets haiku */
     :root{
-      --ink: #0f172a;
-      --muted: #64748b;
-      --accent: #ff4d6d;
-      --accent-2: #ffd166;
-      --card: rgba(255,255,255,0.78);
-      --stroke: rgba(15,23,42,0.16);
-      --glow: rgba(255,77,109,0.25);
+      --panel: var(--surface);
+      --ok: #859900;
+      --bad: #dc322f;
     }
 
     body{
-      background:
-        radial-gradient(1200px 600px at 20% -10%, #fff6d6 0%, rgba(255,255,255,0) 60%),
-        radial-gradient(900px 500px at 100% 0%, #ffe4ef 0%, rgba(255,255,255,0) 55%),
-        linear-gradient(180deg, #f8fbff 0%, #eef2ff 100%);
+      background: var(--bg);
       color: var(--ink);
-      font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+      font-family: var(--typewriter);
     }
-
-    .wrap{
-      max-width: 720px;
+    .page-content{
+      margin: 42px 0;
     }
 
     .ascii{
-      color: var(--ink);
-      letter-spacing: 0.08em;
-      text-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+      font-family: var(--typewriter);
+      font-size: 13px;
+      line-height: 1.2;
+      margin-bottom: 16px;
     }
 
     .text{
+      font-size: 15px;
       color: var(--ink);
-      font-size: 16px;
-    }
-
-    .muted{
-      color: var(--muted);
     }
 
     .mono.haiku{
-      margin: 16px 0 14px;
-      padding: 16px 16px 18px;
-      border-radius: 16px;
-      border: 1px solid var(--stroke);
-      background: var(--card);
-      box-shadow: 0 12px 30px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
-      backdrop-filter: blur(6px);
-      font-family: "BIZ UDPMincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
-      font-size: 16px;
-      line-height: 1.7;
+      margin: 14px 0;
+      padding: 12px;
+      border: 1px solid var(--line);
+      background: var(--panel);
+      font-family: var(--typewriter);
+      font-size: 15px;
+      line-height: 1.6;
     }
 
     .line{
@@ -337,46 +356,35 @@
 
     .slot{
       font: inherit;
-      border: 1px solid var(--stroke);
-      border-bottom-width: 2px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.6);
-      padding: 2px 6px;
-      margin: 0 2px;
+      border: 0;
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      padding: 0 2px;
+      margin: 0;
       outline: none;
       color: var(--ink);
-      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
     }
 
     .slot:focus{
-      border-color: var(--accent);
-      box-shadow: 0 0 0 4px var(--glow);
-      background: #fff;
+      background: rgba(147,161,161,0.18);
     }
 
     .slot.ok{
-      border-color: #16a34a;
-      color: #166534;
-      background: #f0fdf4;
+      border-bottom-color: var(--ok);
+      color: var(--ok);
     }
 
     .slot.bad{
-      border-color: var(--accent);
-      color: #b42318;
-      background: #fff1f2;
+      border-bottom-color: var(--bad);
+      color: var(--bad);
     }
 
     a{
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(15,23,42,0.3);
+      color: var(--link);
+      text-decoration: underline;
+      border-bottom: 0;
     }
 
-    a:hover{
-      background: linear-gradient(90deg, rgba(255,77,109,0.18), rgba(255,209,102,0.18));
-    }
-
-    /* Mobile */
     @media (max-width: 520px){
       .wrap{
         padding: 16px 14px 32px;
@@ -387,9 +395,8 @@
       }
 
       .mono.haiku{
-        padding: 14px 14px 16px;
-        font-size: 17px;
-        line-height: 1.75;
+        font-size: 16px;
+        line-height: 1.65;
       }
 
       .line{
@@ -398,7 +405,6 @@
 
       .slot{
         min-width: 7ch;
-        padding: 4px 7px;
       }
     }
   </style>

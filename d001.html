@@ -9,13 +9,12 @@
 
 <body>
   <main class="wrap">
-    <pre class="ascii">
-+-----------------------------+
-|           drop 02           |
-+-----------------------------+
-    </pre>
+    <pre class="ascii" data-ascii="header" data-title="ptrjstn"></pre>
 
-    <p class="text">Finde die 5-stellige Zahl mit Quersumme <strong id="targetSum"></strong>.</p>
+    <h1 class="sr-only">ptrjstn</h1>
+
+    <section class="page-content">
+    <p class="text">finde die 5-stellige zahl mit quersumme <strong id="targetSum"></strong>.</p>
 
     <div class="game">
       <div class="board" id="board" aria-label="Primes board"></div>
@@ -31,7 +30,17 @@
       <span class="muted">/</span>
       <a href="#" id="newGame">new</a>
     </p>
+    </section>
+
+    <pre class="ascii" aria-hidden="true" data-ascii="line"></pre>
+
+    <div id="sharedMeta"></div>
+
+    <div id="sharedFooter"></div>
   </main>
+
+  <script src="fragments.js"></script>
+  <script src="shell.js"></script>
 
   <script>
     const boardEl = document.getElementById("board");
@@ -45,24 +54,6 @@
     let answer = "";
     let row = 0;
     let gameOver = false;
-
-    function isPrime(n) {
-      if (n < 2) return false;
-      if (n % 2 === 0) return n === 2;
-      const r = Math.floor(Math.sqrt(n));
-      for (let i = 3; i <= r; i += 2) {
-        if (n % i === 0) return false;
-      }
-      return true;
-    }
-
-    function randomPrime5() {
-      while (true) {
-        const n = Math.floor(Math.random() * 90000) + 10000;
-        if (n % 2 === 0 || n % 5 === 0) continue;
-        if (isPrime(n)) return String(n);
-      }
-    }
 
     function clearBoard() {
       boardEl.innerHTML = "";
@@ -106,7 +97,6 @@
       const counts = {};
       target.forEach((d) => { counts[d] = (counts[d] || 0) + 1; });
 
-      // First pass: exact
       guess.forEach((d, i) => {
         if (d === target[i]) {
           cells[i].classList.add("hit");
@@ -114,7 +104,6 @@
         }
       });
 
-      // Second pass: present / miss
       guess.forEach((d, i) => {
         if (cells[i].classList.contains("hit")) return;
         if (counts[d] > 0) {
@@ -231,39 +220,54 @@
 
   <style>
     :root{
-      --ink: #073642;
-      --muted: #586e75;
-      --bg: #fdf6e3;
-      --card: #fefaf0;
-      --line: rgba(7,54,66,0.18);
-      --hit: #859900;  /* Solarized green */
-      --near: #b58900; /* Solarized yellow */
-      --miss: #eee8d5; /* Solarized base2 */
+      --game-card: transparent;
+      --game-line: #586e75;
+      --hit: #859900;
+      --near: #cb4b16;
+      --miss: #93a1a1;
     }
 
     body{
-      background:
-        radial-gradient(900px 500px at 10% -10%, #fff3cf 0%, rgba(255,255,255,0) 60%),
-        linear-gradient(180deg, #fdf6e3 0%, #f7f0dd 100%);
+      background: var(--bg);
       color: var(--ink);
-      font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+      font-family: var(--typewriter);
+    }
+
+    .ascii{
+      font-family: var(--typewriter);
+      font-size: 13px;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+    .page-content{
+      margin: 42px 0;
+    }
+
+    .text{
+      color: var(--ink);
+      font-size: 15px;
+    }
+
+    .page-content > p.text:first-of-type{
+      text-align: center;
     }
 
     .game{
-      margin: 12px 0 14px;
-      padding: 10px;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      box-shadow: 0 8px 18px rgba(7,54,66,0.08);
-      display: inline-block;
+      margin: 12px auto 14px;
+      padding: 0;
+      background: transparent;
+      border: 0;
+      box-shadow: none;
+      display: block;
+      width: fit-content;
+      max-width: 100%;
     }
 
     .board{
       display: grid;
       grid-template-rows: repeat(5, 1fr);
       gap: 6px;
-      width: 300px;
+      width: min(300px, calc(100vw - 48px));
     }
 
     .row{
@@ -275,55 +279,39 @@
     .cell{
       width: 100%;
       aspect-ratio: 1 / 1;
-      border: 1px solid #d5cdb8;
-      border-radius: 12px;
+      border: 1px solid var(--game-line);
+      border-radius: 0;
       font-size: 17px;
       text-align: center;
       font-weight: 600;
       color: var(--ink);
       outline: none;
       background: #eee8d5;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.9),
-        inset 0 -2px 0 rgba(15,23,42,0.08),
-        0 2px 4px rgba(15,23,42,0.08);
-      transition: transform 120ms ease, border-color 140ms ease, box-shadow 140ms ease;
+      transition: border-color 120ms ease, background 120ms ease;
+      font-family: var(--typewriter);
     }
 
     .cell:focus{
-      border-color: #268bd2;
-      box-shadow: 0 0 0 3px rgba(38,139,210,0.2);
-      transform: translateY(-1px);
+      border-color: var(--link);
+      box-shadow: 0 0 0 2px rgba(38,139,210,0.32);
     }
 
     .cell.hit{
       border-color: var(--hit);
       background: var(--hit);
-      color: #fdf6e3;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.35),
-        inset 0 -2px 0 rgba(0,0,0,0.18),
-        0 4px 10px rgba(22,163,74,0.25);
+      color: #fff;
     }
 
     .cell.near{
       border-color: var(--near);
       background: var(--near);
-      color: #3b2f00;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.35),
-        inset 0 -2px 0 rgba(0,0,0,0.18),
-        0 4px 10px rgba(244,180,0,0.2);
+      color: #fdf6e3;
     }
 
     .cell.miss{
-      border-color: #d5cdb8;
-      background: #eee8d5;
-      color: #657b83;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,0.7),
-        inset 0 -2px 0 rgba(15,23,42,0.06),
-        0 2px 4px rgba(15,23,42,0.05);
+      border-color: var(--game-line);
+      background: var(--miss);
+      color: #073642;
     }
 
     .status{
@@ -332,10 +320,20 @@
       margin-top: 10px;
     }
 
+    a{
+      color: var(--link);
+      text-decoration: underline;
+    }
+
     @media (max-width: 520px){
       .wrap{
         padding: 16px 14px 32px;
       }
+
+      .ascii{
+        font-size: 12px;
+      }
+
       .cell{
         font-size: 19px;
       }
