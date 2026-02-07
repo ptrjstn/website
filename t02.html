@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>drop 02 — Primes</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="wrap">
+    <pre class="ascii">
++-----------------------------+
+|           drop 02           |
++-----------------------------+
+    </pre>
+
+    <p class="text">Finde die 5-stellige Zahl mit Quersumme <strong id="targetSum"></strong>.</p>
+
+    <div class="game">
+      <div class="board" id="board" aria-label="Primes board"></div>
+
+      <div class="status">
+        <span class="muted" id="info"></span>
+        <span class="muted" id="feedback"></span>
+      </div>
+    </div>
+
+    <p class="text">
+      <a href="index.html">← back</a>
+      <span class="muted">/</span>
+      <a href="#" id="newGame">new</a>
+    </p>
+  </main>
+
+  <script>
+    const boardEl = document.getElementById("board");
+    const infoEl = document.getElementById("info");
+    const feedbackEl = document.getElementById("feedback");
+    const newGame = document.getElementById("newGame");
+    const targetSumEl = document.getElementById("targetSum");
+
+    const ROWS = 5;
+    const COLS = 5;
+    let answer = "";
+    let row = 0;
+    let gameOver = false;
+
+    function isPrime(n) {
+      if (n < 2) return false;
+      if (n % 2 === 0) return n === 2;
+      const r = Math.floor(Math.sqrt(n));
+      for (let i = 3; i <= r; i += 2) {
+        if (n % i === 0) return false;
+      }
+      return true;
+    }
+
+    function randomPrime5() {
+      while (true) {
+        const n = Math.floor(Math.random() * 90000) + 10000;
+        if (n % 2 === 0 || n % 5 === 0) continue;
+        if (isPrime(n)) return String(n);
+      }
+    }
+
+    function clearBoard() {
+      boardEl.innerHTML = "";
+      for (let r = 0; r < ROWS; r++) {
+        const rowEl = document.createElement("div");
+        rowEl.className = "row";
+        rowEl.dataset.row = String(r);
+        for (let c = 0; c < COLS; c++) {
+          const cell = document.createElement("input");
+          cell.className = "cell";
+          cell.type = "text";
+          cell.inputMode = "numeric";
+          cell.maxLength = 1;
+          cell.dataset.row = String(r);
+          cell.dataset.col = String(c);
+          cell.setAttribute("aria-label", `row ${r + 1} col ${c + 1}`);
+          rowEl.appendChild(cell);
+        }
+        boardEl.appendChild(rowEl);
+      }
+    }
+
+    function setActiveRow(r) {
+      const all = boardEl.querySelectorAll(".cell");
+      all.forEach((el) => {
+        const rr = Number(el.dataset.row);
+        el.disabled = rr !== r || gameOver;
+      });
+      const first = boardEl.querySelector(`.cell[data-row="${r}"][data-col="0"]`);
+      if (first) first.focus();
+    }
+
+    function getRowValues(r) {
+      const cells = boardEl.querySelectorAll(`.cell[data-row="${r}"]`);
+      return Array.from(cells).map((c) => c.value);
+    }
+
+    function applyFeedback(r, guess) {
+      const cells = boardEl.querySelectorAll(`.cell[data-row="${r}"]`);
+      const target = answer.split("");
+      const counts = {};
+      target.forEach((d) => { counts[d] = (counts[d] || 0) + 1; });
+
+      // First pass: exact
+      guess.forEach((d, i) => {
+        if (d === target[i]) {
+          cells[i].classList.add("hit");
+          counts[d] -= 1;
+        }
+      });
+
+      // Second pass: present / miss
+      guess.forEach((d, i) => {
+        if (cells[i].classList.contains("hit")) return;
+        if (counts[d] > 0) {
+          cells[i].classList.add("near");
+          counts[d] -= 1;
+        } else {
+          cells[i].classList.add("miss");
+        }
+      });
+    }
+
+    function lockRow(r) {
+      const cells = boardEl.querySelectorAll(`.cell[data-row="${r}"]`);
+      cells.forEach((c) => (c.disabled = true));
+    }
+
+    function submitRow() {
+      const guess = getRowValues(row);
+      if (guess.some((d) => d === "")) return;
+      applyFeedback(row, guess);
+      lockRow(row);
+
+      if (guess.join("") === answer) {
+        feedbackEl.textContent = "";
+        gameOver = true;
+        setActiveRow(row);
+        return;
+      }
+
+      row += 1;
+      if (row >= ROWS) {
+        feedbackEl.textContent = `vorbei. ${answer}`;
+        gameOver = true;
+        setActiveRow(row);
+        return;
+      }
+
+      setActiveRow(row);
+    }
+
+    function handleInput(e) {
+      const el = e.target;
+      if (!el.classList.contains("cell")) return;
+      const v = el.value.replace(/[^0-9]/g, "");
+      el.value = v.slice(0, 1);
+      if (el.value) {
+        const col = Number(el.dataset.col);
+        const next = boardEl.querySelector(`.cell[data-row="${row}"][data-col="${col + 1}"]`);
+        if (next) next.focus();
+      }
+      submitRow();
+    }
+
+    function handleKeydown(e) {
+      const el = e.target;
+      if (!el.classList.contains("cell")) return;
+      const col = Number(el.dataset.col);
+      if (e.key === "Backspace" && !el.value && col > 0) {
+        const prev = boardEl.querySelector(`.cell[data-row="${row}"][data-col="${col - 1}"]`);
+        if (prev) prev.focus();
+      }
+      if (e.key === "Enter") {
+        e.preventDefault();
+        submitRow();
+      }
+    }
+
+    function handlePaste(e) {
+      const el = e.target;
+      if (!el.classList.contains("cell")) return;
+      const text = (e.clipboardData || window.clipboardData).getData("text");
+      if (!text) return;
+      const digits = text.replace(/[^0-9]/g, "").slice(0, COLS);
+      if (!digits) return;
+      e.preventDefault();
+      const startCol = Number(el.dataset.col);
+      for (let i = 0; i < digits.length; i++) {
+        const cell = boardEl.querySelector(`.cell[data-row="${row}"][data-col="${startCol + i}"]`);
+        if (cell) cell.value = digits[i];
+      }
+      submitRow();
+    }
+
+    function digitSum(s) {
+      return s.split("").reduce((acc, d) => acc + Number(d || 0), 0);
+    }
+
+    function randomFiveDigit() {
+      return String(Math.floor(Math.random() * 90000) + 10000);
+    }
+
+    function startGame() {
+      answer = randomFiveDigit();
+      targetSumEl.textContent = String(digitSum(answer));
+      row = 0;
+      gameOver = false;
+      feedbackEl.textContent = "";
+      infoEl.textContent = "";
+      clearBoard();
+      setActiveRow(0);
+    }
+
+    boardEl.addEventListener("input", handleInput);
+    boardEl.addEventListener("keydown", handleKeydown);
+    boardEl.addEventListener("paste", handlePaste);
+
+    newGame.addEventListener("click", (e) => {
+      e.preventDefault();
+      startGame();
+    });
+
+    startGame();
+  </script>
+
+  <style>
+    :root{
+      --ink: #073642;
+      --muted: #586e75;
+      --bg: #fdf6e3;
+      --card: #fefaf0;
+      --line: rgba(7,54,66,0.18);
+      --hit: #859900;  /* Solarized green */
+      --near: #b58900; /* Solarized yellow */
+      --miss: #eee8d5; /* Solarized base2 */
+    }
+
+    body{
+      background:
+        radial-gradient(900px 500px at 10% -10%, #fff3cf 0%, rgba(255,255,255,0) 60%),
+        linear-gradient(180deg, #fdf6e3 0%, #f7f0dd 100%);
+      color: var(--ink);
+      font-family: "Avenir Next", "Helvetica Neue", Arial, sans-serif;
+    }
+
+    .game{
+      margin: 12px 0 14px;
+      padding: 10px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 8px 18px rgba(7,54,66,0.08);
+      display: inline-block;
+    }
+
+    .board{
+      display: grid;
+      grid-template-rows: repeat(5, 1fr);
+      gap: 6px;
+      width: 300px;
+    }
+
+    .row{
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+    }
+
+    .cell{
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border: 1px solid #d5cdb8;
+      border-radius: 12px;
+      font-size: 17px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--ink);
+      outline: none;
+      background: #eee8d5;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.9),
+        inset 0 -2px 0 rgba(15,23,42,0.08),
+        0 2px 4px rgba(15,23,42,0.08);
+      transition: transform 120ms ease, border-color 140ms ease, box-shadow 140ms ease;
+    }
+
+    .cell:focus{
+      border-color: #268bd2;
+      box-shadow: 0 0 0 3px rgba(38,139,210,0.2);
+      transform: translateY(-1px);
+    }
+
+    .cell.hit{
+      border-color: var(--hit);
+      background: var(--hit);
+      color: #fdf6e3;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.35),
+        inset 0 -2px 0 rgba(0,0,0,0.18),
+        0 4px 10px rgba(22,163,74,0.25);
+    }
+
+    .cell.near{
+      border-color: var(--near);
+      background: var(--near);
+      color: #3b2f00;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.35),
+        inset 0 -2px 0 rgba(0,0,0,0.18),
+        0 4px 10px rgba(244,180,0,0.2);
+    }
+
+    .cell.miss{
+      border-color: #d5cdb8;
+      background: #eee8d5;
+      color: #657b83;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.7),
+        inset 0 -2px 0 rgba(15,23,42,0.06),
+        0 2px 4px rgba(15,23,42,0.05);
+    }
+
+    .status{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    @media (max-width: 520px){
+      .wrap{
+        padding: 16px 14px 32px;
+      }
+      .cell{
+        font-size: 19px;
+      }
+    }
+  </style>
+</body>
+</html>

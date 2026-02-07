@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>useless</title>
+  <meta name="description" content="drops" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="wrap">
+    <pre class="ascii" aria-hidden="true">
++-----------------------------+
+|            useless          |
++-----------------------------+
+    </pre>
+
+    <h1 class="sr-only">useless</h1>
+
+    <section id="drops" class="block">
+      <div class="label">drops</div>
+
+      <ul class="drops">
+        <li>
+          <a class="drop active" href="t01.html">
+            <span class="code">01</span>
+            <span class="title">haiku noun game</span>
+            <span class="status">active</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="drop empty" href="t02.html" aria-disabled="false">
+            <span class="code">02</span>
+            <span class="title"></span>
+            <span class="status">empty</span>
+          </a>
+        </li>
+
+        <li>
+          <a class="drop empty" href="t03.html" aria-disabled="false">
+            <span class="code">03</span>
+            <span class="title"></span>
+            <span class="status">empty</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <pre class="ascii" aria-hidden="true">
++-----------------------------+
+    </pre>
+
+    <section id="about" class="block">
+      <div class="label">about</div>
+      <p class="text">arbeitsstand.</p>
+    </section>
+
+    <section id="contact" class="block">
+      <div class="label">contact</div>
+      <p class="text">
+        <a href="mailto:hello@example.com">hello@example.com</a>
+      </p>
+    </section>
+
+    <footer class="foot">
+      <span class="muted">© <span id="year"></span></span>
+      <span class="muted">/</span>
+      <span class="muted">local</span>
+    </footer>
+  </main>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

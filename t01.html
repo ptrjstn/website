@@ -1,0 +1,406 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>High-Q</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="wrap">
+    <pre class="ascii">
++-----------------------------+
+|            High-Q           |
++-----------------------------+
+    </pre>
+
+    <p class="text">High-Q — haiku noun game.</p>
+
+    <!-- Haiku (monospace) mit echten Inputs -->
+    <div class="mono haiku" id="haiku" aria-label="haiku">
+      <!-- wird per JS gerendert -->
+    </div>
+
+    <p class="muted" id="feedback"></p>
+    <p class="muted" id="progress"></p>
+
+    <p class="muted" id="reveal"></p>
+
+    <p class="text">
+      <a href="index.html">← back</a>
+      <span class="muted">/</span>
+      <a href="#" id="nextLink">next</a>
+      <span class="muted">/</span>
+      <a href="#" id="clearLink">clear</a>
+    </p>
+  </main>
+
+    <script>
+    // Regeln:
+    // - Es gibt genau 3 Lücken (Nomen).
+    // - Zeile 2 hat 2 Lücken, Zeile 3 hat 1 Lücke.
+    // - Du tippst direkt in die Lücken.
+    // - Quelle: haiku_db_30.json (später haiku_db_365.json)
+
+    const DB_URL = "haiku_db_30.json";
+
+    const haikuEl = document.getElementById("haiku");
+    const feedbackEl = document.getElementById("feedback");
+    const progressEl = document.getElementById("progress");
+    const revealEl = document.getElementById("reveal");
+    const nextLink = document.getElementById("nextLink");
+    const clearLink = document.getElementById("clearLink");
+
+    let pool = [];
+    let current = null;
+    let solved = [false, false, false];
+    let inputs = [];
+
+    function normalize(s) {
+      return (s || "")
+        .toLowerCase()
+        .trim()
+        .replaceAll("ß", "ss")
+        .normalize("NFD").replace(/\p{Diacritic}/gu, "")
+        .replace(/[^a-z]/g, "");
+    }
+
+    function approxWidthForAnswer(answer) {
+      const len = (answer || "").trim().length;
+      if (len <= 4) return 6;
+      if (len <= 6) return 7;
+      if (len <= 8) return 9;
+      if (len <= 10) return 11;
+      return 13;
+    }
+
+    function renderTextOrInput(token) {
+      if (typeof token === "string") return document.createTextNode(token);
+
+      const i = token;
+      const inp = document.createElement("input");
+      inp.type = "text";
+      inp.inputMode = "text";
+      inp.autocomplete = "off";
+      inp.spellcheck = false;
+      inp.className = "slot";
+      inp.dataset.i = String(i);
+      inp.placeholder = "";
+      inp.setAttribute("aria-label", `slot ${i + 1}`);
+      if (current?.answers?.[i]) {
+        const w = approxWidthForAnswer(current.answers[i]);
+        inp.style.width = `${w}ch`;
+      }
+
+      inp.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          evaluateSlot(i);
+        }
+      });
+
+      inp.addEventListener("blur", () => evaluateSlot(i));
+
+      // Beim Tippen: sofort bewerten
+      inp.addEventListener("input", () => {
+        evaluateSlot(i);
+      });
+
+      inputs[i] = inp;
+      return inp;
+    }
+
+    function lineToTokensWithSlots(text, slotStartIndex, maxSlotsForLine) {
+      const parts = String(text).split("___");
+      if (parts.length === 1) return { tokens: [text], usedSlots: 0 };
+
+      const tokens = [parts[0]];
+      let used = 0;
+
+      for (let i = 1; i < parts.length; i++) {
+        if (used < maxSlotsForLine) {
+          tokens.push(slotStartIndex + used);
+          used += 1;
+        } else {
+          tokens.push("___");
+        }
+        tokens.push(parts[i]);
+      }
+
+      return { tokens, usedSlots: used };
+    }
+
+    function haikuFromDBItem(item) {
+      const l1 = item.text_visible?.[0] ?? "";
+      const l2 = item.text_visible?.[1] ?? "";
+      const l3 = item.text_visible?.[2] ?? "";
+
+      const t2 = lineToTokensWithSlots(l2, 0, 2);
+      const t3 = lineToTokensWithSlots(l3, 2, 1);
+
+      return {
+        line1: l1,
+        line2: t2.tokens,
+        line3: t3.tokens,
+        answers: item.solution || [],
+        author: item.author || "",
+        born: item.born ?? null,
+        died: item.died ?? null
+      };
+    }
+
+    function renderPuzzle(p) {
+      haikuEl.innerHTML = "";
+      inputs = [];
+      solved = p.answers.map(() => false);
+      feedbackEl.textContent = "";
+      revealEl.textContent = "";
+      updateProgress();
+
+      const line1 = document.createElement("div");
+      line1.className = "line";
+      line1.textContent = p.line1;
+
+      const line2 = document.createElement("div");
+      line2.className = "line";
+      p.line2.forEach(tok => line2.appendChild(renderTextOrInput(tok)));
+
+      const line3 = document.createElement("div");
+      line3.className = "line";
+      p.line3.forEach(tok => line3.appendChild(renderTextOrInput(tok)));
+
+      haikuEl.appendChild(line1);
+      haikuEl.appendChild(line2);
+      haikuEl.appendChild(line3);
+
+      focusFirstUnsolved();
+    }
+
+    function updateProgress() {
+      const done = solved.filter(Boolean).length;
+      progressEl.textContent = `found ${done}/${solved.length}`;
+
+      if (done === solved.length) {
+        feedbackEl.textContent = "";
+        if (current?.author) {
+          const dates = (current.born && current.died) ? ` (${current.born}–${current.died})` : "";
+          revealEl.textContent = `${current.author}${dates}`;
+        }
+      }
+    }
+
+    function focusFirstUnsolved() {
+      const idx = solved.findIndex(v => !v);
+      const el = inputs[idx >= 0 ? idx : 0];
+      if (el) {
+        el.focus();
+        el.setSelectionRange(el.value.length, el.value.length);
+      }
+    }
+
+    function markOk(i) {
+      inputs[i].classList.remove("bad");
+      inputs[i].classList.add("ok");
+      inputs[i].disabled = true;
+      inputs[i].placeholder = "";
+    }
+
+    function evaluateSlot(i) {
+      if (solved[i]) return;
+      const guess = normalize(inputs[i].value);
+      if (!guess) {
+        inputs[i].classList.remove("bad");
+        return;
+      }
+
+      const target = normalize(current.answers[i]);
+      if (guess === target) {
+        solved[i] = true;
+        markOk(i);
+        feedbackEl.textContent = "";
+        updateProgress();
+        focusFirstUnsolved();
+      } else {
+        feedbackEl.textContent = "";
+        inputs[i].classList.add("bad");
+      }
+    }
+
+    function clearAll() {
+      if (!current) return;
+      solved = current.answers.map(() => false);
+      inputs.forEach((inp) => {
+        inp.disabled = false;
+        inp.value = "";
+        inp.placeholder = "";
+        inp.classList.remove("ok");
+      });
+      feedbackEl.textContent = "";
+      revealEl.textContent = "";
+      updateProgress();
+      focusFirstUnsolved();
+    }
+
+    function nextPuzzle() {
+      if (!pool.length) return;
+      const raw = pool[Math.floor(Math.random() * pool.length)];
+      current = haikuFromDBItem(raw);
+      renderPuzzle(current);
+    }
+
+    async function loadDB() {
+      const res = await fetch(DB_URL, { cache: "no-store" });
+      if (!res.ok) throw new Error(`DB load failed: ${res.status}`);
+      const db = await res.json();
+      pool = Array.isArray(db?.haikus) ? db.haikus : [];
+      if (!pool.length) throw new Error("DB is empty.");
+    }
+
+    nextLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      nextPuzzle();
+    });
+
+    clearLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      clearAll();
+    });
+
+    (async () => {
+      try {
+        await loadDB();
+        nextPuzzle();
+      } catch (err) {
+        feedbackEl.textContent = "db error.";
+        console.error(err);
+      }
+    })();
+  </script>
+
+  <style>
+    /* High-Q – modern mobile game meets haiku */
+    :root{
+      --ink: #0f172a;
+      --muted: #64748b;
+      --accent: #ff4d6d;
+      --accent-2: #ffd166;
+      --card: rgba(255,255,255,0.78);
+      --stroke: rgba(15,23,42,0.16);
+      --glow: rgba(255,77,109,0.25);
+    }
+
+    body{
+      background:
+        radial-gradient(1200px 600px at 20% -10%, #fff6d6 0%, rgba(255,255,255,0) 60%),
+        radial-gradient(900px 500px at 100% 0%, #ffe4ef 0%, rgba(255,255,255,0) 55%),
+        linear-gradient(180deg, #f8fbff 0%, #eef2ff 100%);
+      color: var(--ink);
+      font-family: "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+    }
+
+    .wrap{
+      max-width: 720px;
+    }
+
+    .ascii{
+      color: var(--ink);
+      letter-spacing: 0.08em;
+      text-shadow: 0 4px 18px rgba(15, 23, 42, 0.18);
+    }
+
+    .text{
+      color: var(--ink);
+      font-size: 16px;
+    }
+
+    .muted{
+      color: var(--muted);
+    }
+
+    .mono.haiku{
+      margin: 16px 0 14px;
+      padding: 16px 16px 18px;
+      border-radius: 16px;
+      border: 1px solid var(--stroke);
+      background: var(--card);
+      box-shadow: 0 12px 30px rgba(15,23,42,0.12), inset 0 1px 0 rgba(255,255,255,0.6);
+      backdrop-filter: blur(6px);
+      font-family: "BIZ UDPMincho", "Hiragino Mincho ProN", "Yu Mincho", "Noto Serif JP", serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .line{
+      white-space: pre;
+    }
+
+    .slot{
+      font: inherit;
+      border: 1px solid var(--stroke);
+      border-bottom-width: 2px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.6);
+      padding: 2px 6px;
+      margin: 0 2px;
+      outline: none;
+      color: var(--ink);
+      transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    }
+
+    .slot:focus{
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px var(--glow);
+      background: #fff;
+    }
+
+    .slot.ok{
+      border-color: #16a34a;
+      color: #166534;
+      background: #f0fdf4;
+    }
+
+    .slot.bad{
+      border-color: var(--accent);
+      color: #b42318;
+      background: #fff1f2;
+    }
+
+    a{
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(15,23,42,0.3);
+    }
+
+    a:hover{
+      background: linear-gradient(90deg, rgba(255,77,109,0.18), rgba(255,209,102,0.18));
+    }
+
+    /* Mobile */
+    @media (max-width: 520px){
+      .wrap{
+        padding: 16px 14px 32px;
+      }
+
+      .ascii{
+        font-size: 12px;
+      }
+
+      .mono.haiku{
+        padding: 14px 14px 16px;
+        font-size: 17px;
+        line-height: 1.75;
+      }
+
+      .line{
+        white-space: normal;
+      }
+
+      .slot{
+        min-width: 7ch;
+        padding: 4px 7px;
+      }
+    }
+  </style>
+</body>
+</html>

@@ -1,0 +1,561 @@
+{
+  "meta": {
+    "title": "Haiku Rätsel Datenbank",
+    "language": "de",
+    "version": "0.1",
+    "count": 30,
+    "rule": {
+      "line_2": "2 missing nouns",
+      "line_3": "1 missing noun",
+      "blank_token": "___",
+      "note": "Die deutschen Renderings und das Rätsel-Layout sind CC0 gewidmet."
+    },
+    "license": {
+      "translations_and_formatting": "CC0-1.0 (Public Domain Dedication)",
+      "attribution_note": "Die genannten Autor:innen sind klassische Haiku-Dichter:innen; die deutschen Renderings sind freie, neue Übertragungen (CC0)."
+    },
+    "generated_at": "2026-02-06"
+  },
+  "haikus": [
+    {
+      "id": 1,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "leicht",
+      "text_visible": [
+        "Alter Teich",
+        "Ein ___ springt ins ___",
+        "Klang des ___"
+      ],
+      "solution": [
+        "Frosch",
+        "Wasser",
+        "Platschen"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 2,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Herbstnebel",
+        "Am ___ ein ___",
+        "still bleibt der ___"
+      ],
+      "solution": [
+        "Weg",
+        "Vogel",
+        "Atem"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 3,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Winterabend",
+        "Im ___ ein ___",
+        "fern schlägt die ___"
+      ],
+      "solution": [
+        "Dorf",
+        "Licht",
+        "Glocke"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 4,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Sommerregen",
+        "Über ___ und ___",
+        "zieht ein ___"
+      ],
+      "solution": [
+        "Feld",
+        "Dach",
+        "Duft"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 5,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Bergpfad",
+        "Zwischen ___ und ___",
+        "ein kurzes ___"
+      ],
+      "solution": [
+        "Kiefer",
+        "Fels",
+        "Lächeln"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 6,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Nacht am Meer",
+        "___ vor ___",
+        "auf der Zunge ___"
+      ],
+      "solution": [
+        "Wind",
+        "Steinen",
+        "Salz"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 7,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "fein",
+      "text_visible": [
+        "Spätes Licht",
+        "___ im ___",
+        "ein einziger ___"
+      ],
+      "solution": [
+        "Staub",
+        "Fenster",
+        "Gedanke"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 8,
+      "author": "Matsuo Bashō",
+      "born": 1644,
+      "died": 1694,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Reisetag",
+        "___ und ___",
+        "teilen den ___"
+      ],
+      "solution": [
+        "Müdigkeit",
+        "Staub",
+        "Hut"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 9,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "leicht",
+      "text_visible": [
+        "Frühlingsabend",
+        "___ und ___",
+        "teilen den ___"
+      ],
+      "solution": [
+        "Mond",
+        "Wolken",
+        "Himmel"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 10,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Unter Bambus",
+        "___ auf ___",
+        "zittert das ___"
+      ],
+      "solution": [
+        "Tau",
+        "Blättern",
+        "Grün"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 11,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Feld im Abend",
+        "___ bei ___",
+        "ein langer ___"
+      ],
+      "solution": [
+        "Pflug",
+        "Schatten",
+        "Zug"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 12,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Leerer Hof",
+        "___ und ___",
+        "nur der ___"
+      ],
+      "solution": [
+        "Schnee",
+        "Schüssel",
+        "Hahn"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 13,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "fein",
+      "text_visible": [
+        "Sommerhitze",
+        "___ im ___",
+        "plötzlich ein ___"
+      ],
+      "solution": [
+        "Licht",
+        "Zimmer",
+        "Seufzer"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 14,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Abendweg",
+        "___ an ___",
+        "im Gras ein ___"
+      ],
+      "solution": [
+        "Laterne",
+        "Regen",
+        "Glanz"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 15,
+      "author": "Yosa Buson",
+      "born": 1716,
+      "died": 1784,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Hügelwind",
+        "___ bei ___",
+        "über dem ___"
+      ],
+      "solution": [
+        "Kranich",
+        "Nebel",
+        "Reisfeld"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 16,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "leicht",
+      "text_visible": [
+        "Dorf am Morgen",
+        "___ und ___",
+        "auf dem ___"
+      ],
+      "solution": [
+        "Kinder",
+        "Krähen",
+        "Dach"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 17,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Sommernacht",
+        "___ in ___",
+        "im Ohr ein ___"
+      ],
+      "solution": [
+        "Grille",
+        "Dunkel",
+        "Lied"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 18,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Nach dem Regen",
+        "___ auf ___",
+        "unter dem ___"
+      ],
+      "solution": [
+        "Schnecke",
+        "Stein",
+        "Blatt"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 19,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Kalter Morgen",
+        "___ am ___",
+        "im Becher ___"
+      ],
+      "solution": [
+        "Katze",
+        "Ofen",
+        "Dampf"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 20,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "fein",
+      "text_visible": [
+        "Mond im Hof",
+        "___ neben ___",
+        "so klein der ___"
+      ],
+      "solution": [
+        "Hund",
+        "Schatten",
+        "Mut"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 21,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Frühlingswind",
+        "___ über ___",
+        "im Gesicht ___"
+      ],
+      "solution": [
+        "Blüten",
+        "Graben",
+        "Staunen"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 22,
+      "author": "Kobayashi Issa",
+      "born": 1763,
+      "died": 1828,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Abend am Tor",
+        "___ und ___",
+        "teilen den ___"
+      ],
+      "solution": [
+        "Bettler",
+        "Hund",
+        "Blick"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 23,
+      "author": "Kaga no Chiyo",
+      "born": 1703,
+      "died": 1775,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Morgentau",
+        "___ am ___",
+        "im Krug ein ___"
+      ],
+      "solution": [
+        "Ranke",
+        "Brunnen",
+        "Stille"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 24,
+      "author": "Kaga no Chiyo",
+      "born": 1703,
+      "died": 1775,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Sommergarten",
+        "___ auf ___",
+        "im Herzen ___"
+      ],
+      "solution": [
+        "Schmetterling",
+        "Finger",
+        "Leere"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 25,
+      "author": "Kaga no Chiyo",
+      "born": 1703,
+      "died": 1775,
+      "difficulty": "leicht",
+      "text_visible": [
+        "Blauer Morgen",
+        "___ und ___",
+        "im Wasser ___"
+      ],
+      "solution": [
+        "Iris",
+        "Ufer",
+        "Spiegel"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 26,
+      "author": "Kaga no Chiyo",
+      "born": 1703,
+      "died": 1775,
+      "difficulty": "fein",
+      "text_visible": [
+        "Abendgebet",
+        "___ im ___",
+        "nur noch der ___"
+      ],
+      "solution": [
+        "Rauch",
+        "Tempel",
+        "Gong"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 27,
+      "author": "Ryōkan",
+      "born": 1758,
+      "died": 1831,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Kinderlachen",
+        "___ und ___",
+        "rollen den ___"
+      ],
+      "solution": [
+        "Staub",
+        "Sonne",
+        "Ball"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 28,
+      "author": "Ryōkan",
+      "born": 1758,
+      "died": 1831,
+      "difficulty": "fein",
+      "text_visible": [
+        "Leere Hütte",
+        "___ vor ___",
+        "ein ganzer ___"
+      ],
+      "solution": [
+        "Reis",
+        "Schale",
+        "Himmel"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 29,
+      "author": "Ryōkan",
+      "born": 1758,
+      "died": 1831,
+      "difficulty": "mittel",
+      "text_visible": [
+        "Abend am Bach",
+        "___ bei ___",
+        "im Wasser ___"
+      ],
+      "solution": [
+        "Kiesel",
+        "Fuss",
+        "Kälte"
+      ],
+      "translator": "ChatGPT (CC0)"
+    },
+    {
+      "id": 30,
+      "author": "Ryōkan",
+      "born": 1758,
+      "died": 1831,
+      "difficulty": "leicht",
+      "text_visible": [
+        "Erster Schnee",
+        "___ auf ___",
+        "ein stiller ___"
+      ],
+      "solution": [
+        "Spuren",
+        "Stufen",
+        "Tag"
+      ],
+      "translator": "ChatGPT (CC0)"
+    }
+  ]
+}
