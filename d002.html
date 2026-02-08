@@ -3,15 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>High-Q</title>
+  <title>drop 002 - haiku</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
   <main class="wrap">
-    <pre class="ascii" data-ascii="header" data-title="ptrjstn"></pre>
-
-    <h1 class="sr-only">ptrjstn</h1>
+    <div class="site-title">ptrjstn</div>
 
     <section class="page-content">
         <p class="text">finde die passenden nomen.</p>
@@ -34,16 +32,13 @@
       <a href="#" id="clearLink">clear</a>
     </p>
     </section>
+    <div class="footer-divider" aria-hidden="true"></div>
 
-    <pre class="ascii" aria-hidden="true" data-ascii="line"></pre>
-
-    <div id="sharedMeta"></div>
 
     <div id="sharedFooter"></div>
   </main>
 
   <script src="fragments.js"></script>
-  <script src="shell.js"></script>
   <script src="haiku_db_30.js"></script>
   <script>
     // Regeln:
@@ -327,14 +322,6 @@
     .page-content{
       margin: 42px 0;
     }
-
-    .ascii{
-      font-family: var(--typewriter);
-      font-size: 13px;
-      line-height: 1.2;
-      margin-bottom: 16px;
-    }
-
     .text{
       font-size: 15px;
       color: var(--ink);
@@ -389,11 +376,6 @@
       .wrap{
         padding: 16px 14px 32px;
       }
-
-      .ascii{
-        font-size: 12px;
-      }
-
       .mono.haiku{
         font-size: 16px;
         line-height: 1.65;
