@@ -12,7 +12,7 @@
     <div class="site-title">ptrjstn</div>
 
     <section class="page-content">
-    <p class="text">finde die 6-stellige zahl mit quersumme <strong id="targetSum"></strong>.</p>
+    <p class="text">finde die 9-stellige zahl mit quersumme <strong id="targetSum"></strong>.</p>
 
     <div class="game">
       <div class="board" id="board" aria-label="Primes board"></div>
@@ -44,8 +44,8 @@
     const newGame = document.getElementById("newGame");
     const targetSumEl = document.getElementById("targetSum");
 
-    const ROWS = 6;
-    const COLS = 6;
+    const ROWS = 9;
+    const COLS = 9;
     let answer = "";
     let row = 0;
     let gameOver = false;
@@ -186,12 +186,12 @@
       return s.split("").reduce((acc, d) => acc + Number(d || 0), 0);
     }
 
-    function randomSixDigit() {
-      return String(Math.floor(Math.random() * 900000) + 100000);
+    function randomNineDigit() {
+      return String(Math.floor(Math.random() * 900000000) + 100000000);
     }
 
     function startGame() {
-      answer = randomSixDigit();
+      answer = randomNineDigit();
       targetSumEl.textContent = String(digitSum(answer));
       row = 0;
       gameOver = false;
@@ -253,14 +253,14 @@
 
     .board{
       display: grid;
-      grid-template-rows: repeat(6, 1fr);
+      grid-template-rows: repeat(9, 1fr);
       gap: 6px;
-      width: min(360px, calc(100vw - 48px));
+      width: min(450px, calc(100vw - 48px));
     }
 
     .row{
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(9, 1fr);
       gap: 6px;
     }
 
