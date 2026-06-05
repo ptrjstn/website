@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kapitel 01 - Curriculum Vitae</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <main class="wrap">
+    <div class="avatar-header"><img src="avatar.jpg" width="320" height="320" alt="Peter Justen" decoding="async" fetchpriority="high" /></div>
+
+    <section class="page-content">
+      <p class="text">Texter und Konzeptioner, ausgebildet am KreativKader Düsseldorf.</p>
+      <p class="text">Zuletzt Serviceplan München, davor DIE CREW Stuttgart.</p>
+      <p class="text"><a href="curriculum-vitae.pdf">Curriculum Vitae</a></p>
+    </section>
+    <div class="footer-divider" aria-hidden="true"></div>
+
+    <p class="text page-back">
+      <a href="index.html">← back</a>
+    </p>
+
+    <div id="sharedFooter"></div>
+  </main>
+
+  <script src="fragments.js"></script>
+
+  <style>
+    .page-content{
+      margin: 42px 0;
+    }
+
+    .page-content .text + .text{
+      margin-top: 10px;
+    }
+
+    .page-back{
+      margin: 0 0 10px;
+    }
+  </style>
+</body>
+</html>

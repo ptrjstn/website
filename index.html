@@ -3,62 +3,321 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ptrjstn</title>
-  <meta name="description" content="drops" />
+  <title>ptrjstn - Portfolio</title>
+  <meta name="description" content="Portfolio von Peter Justen, Konzepter und Copywriter." />
+  <script>
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+
+    if (window.location.hash) {
+      history.replaceState(null, "", window.location.pathname + window.location.search);
+    }
+
+    function scrollPageToTop() {
+      window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      if (document.body) {
+        document.body.scrollTop = 0;
+      }
+    }
+
+    scrollPageToTop();
+    window.addEventListener("beforeunload", () => window.scrollTo(0, 0));
+    window.addEventListener("DOMContentLoaded", scrollPageToTop);
+  </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
 
 <body>
-  <main class="wrap">
-    <div class="site-title">ptrjstn</div>
+  <main class="wrap portfolio-wrap">
+    <header class="portfolio-hero">
+      <div class="site-title">
+        <img src="logo-header-tight.png" width="226" height="98" alt="ptrjstn" decoding="async" fetchpriority="high" />
+      </div>
+      <nav class="portfolio-nav" aria-label="Portfolio">
+        <a href="#arbeit">Arbeit</a>
+        <a href="#kontakt">Kontakt</a>
+        <a href="c001.html">CV</a>
+      </nav>
+    </header>
 
-    <section id="drops" class="block">
+    <section id="arbeit" class="portfolio-list" aria-label="Arbeiten">
+      <article class="portfolio-project" id="deutsche-bahn">
+        <div class="project-copy">
+          <p class="project-count">01</p>
+          <h1>Deutsche Bahn</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>Award-Anzeigen / Idee / Serviceplan 2025</h2>
+            <div class="project-gallery gallery-wide gallery-contain">
+              <img src="portfolio-assets/deutsche-bahn-award-1.jpg" alt="Deutsche Bahn Award-Anzeige" loading="lazy" />
+              <img src="portfolio-assets/deutsche-bahn-award-2.jpg" alt="Deutsche Bahn Award-Anzeige" loading="lazy" />
+              <img src="portfolio-assets/deutsche-bahn-award-3.jpg" alt="Deutsche Bahn Award-Anzeige" loading="lazy" />
+            </div>
+          </section>
+          <section class="work-block">
+            <h2>Kampagne / Konzept &amp; Copy / Serviceplan 2025</h2>
+            <div class="project-gallery gallery-wide gallery-contain gallery-four">
+              <img src="portfolio-assets/deutsche-bahn-naeher-1.png" alt="Deutsche Bahn Kampagne Naeher" loading="lazy" />
+              <img src="portfolio-assets/deutsche-bahn-naeher-2.png" alt="Deutsche Bahn Kampagne Naeher" loading="lazy" />
+              <img src="portfolio-assets/deutsche-bahn-naeher-3.png" alt="Deutsche Bahn Kampagne Naeher" loading="lazy" />
+              <img src="portfolio-assets/deutsche-bahn-naeher-4.png" alt="Deutsche Bahn Kampagne Naeher" loading="lazy" />
+            </div>
+          </section>
+        </div>
+      </article>
 
-      <div class="drops-fade">
-        <ul class="drops">
-          <li>
-            <a class="drop active" href="d001.html" aria-disabled="false">
-              <span class="code">001</span>
-              <span class="title">sumit - das spiel mit der quersumme</span>
-              <span class="status">active</span>
-            </a>
-          </li>
+      <article class="portfolio-project" id="bmw-motorrad">
+        <div class="project-copy">
+          <p class="project-count">02</p>
+          <h1>BMW Motorrad</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>Anzeigen / Copy / Serviceplan 2024-2025</h2>
+            <div class="project-gallery gallery-posters">
+              <img src="portfolio-assets/bmw-anzeige-1.png" alt="BMW Motorrad Anzeige" loading="lazy" />
+              <img src="portfolio-assets/bmw-anzeige-2.jpg" alt="BMW Motorrad Anzeige" loading="lazy" />
+              <img src="portfolio-assets/bmw-anzeige-3.jpg" alt="BMW Motorrad Anzeige" loading="lazy" />
+            </div>
+          </section>
+          <section class="work-block">
+            <h2>Film / Treatment / Serviceplan 2024-2025</h2>
+            <div class="video-grid">
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-thumbnail-time="29" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/7e2b2eea-a9f4-4bb1-ad01-0a5a50e770c9/playlist.m3u8"></video>
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-thumbnail-time="11" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/2d8fe2e0-d7e0-412c-a808-4842b72b2ab3/playlist.m3u8"></video>
+            </div>
+          </section>
+        </div>
+      </article>
 
-          <li>
-            <a class="drop active is-new" href="d002.html">
-              <span class="code">002</span>
-              <span class="title">haiku – finde die passenden nomen</span>
-              <span class="status">active</span>
-              <span class="burst-new" aria-hidden="true"><span class="star"><svg viewBox="0 0 100 100" role="presentation" focusable="false" aria-hidden="true"><path d="M50 2 L58 18 L75 7 L70 25 L89 22 L78 37 L98 40 L82 50 L98 60 L78 63 L89 78 L70 75 L75 93 L58 82 L50 98 L42 82 L25 93 L30 75 L11 78 L22 63 L2 60 L18 50 L2 40 L22 37 L11 22 L30 25 L25 7 L42 18 Z" /></svg></span><span class="txt">new</span></span>
-            </a>
-          </li>
+      <article class="portfolio-project" id="rossmann">
+        <div class="project-copy">
+          <p class="project-count">03</p>
+          <h1>Rossmann</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>TVC / Treatment / Serviceplan 2024</h2>
+            <div class="video-grid">
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/66805acf-1338-4aa1-9dc9-fbc12f7f7a43/playlist.m3u8"></video>
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/69c782a8-bf91-481d-af0e-f46ce54b0518/playlist.m3u8"></video>
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/7102ac07-e2ec-4aeb-a193-9670ea3789d4/playlist.m3u8"></video>
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/4929b0eb-cbeb-4d82-a1d7-b0d98edebfea/playlist.m3u8"></video>
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/a4c56325-5bbf-4277-afb1-8e1aaee31b12/playlist.m3u8"></video>
+              <video class="project-video" controls preload="auto" playsinline crossorigin="anonymous" data-hls="https://video.squarespace-cdn.com/content/v1/67278d15f96a6065db2b218c/f3c92ab5-fb71-44f6-9dc1-71ef1bc26aba/playlist.m3u8"></video>
+            </div>
+          </section>
+        </div>
+      </article>
 
-          <li>
-            <a class="drop empty" href="d003.html" aria-disabled="false">
-              <span class="code">003</span>
-              <span class="title"></span>
-              <span class="status">empty</span>
-            </a>
-          </li>
+      <article class="portfolio-project" id="schwabenbraeu">
+        <div class="project-copy">
+          <p class="project-count">04</p>
+          <h1>Schwaben Bräu</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>Funkis / Skript / Die Crew 2023</h2>
+            <div class="project-audio">
+              <div class="audio-item">
+                <p>Schbezialidäd</p>
+                <audio controls preload="metadata" src="portfolio-assets/schwabenbraeu-schbezialidaed.mp3"></audio>
+              </div>
+              <div class="audio-item">
+                <p>Se Zäld</p>
+                <audio controls preload="metadata" src="portfolio-assets/schwabenbraeu-se-zaeld.mp3"></audio>
+              </div>
+            </div>
+          </section>
+          <section class="work-block">
+            <h2>OOH / Copy / Die Crew 2023</h2>
+            <div class="project-gallery gallery-wide gallery-contain">
+              <img src="portfolio-assets/schwabenbraeu-1.jpg" alt="Schwaben Braeu OOH Motiv" loading="lazy" />
+              <img src="portfolio-assets/schwabenbraeu-2.jpg" alt="Schwaben Braeu OOH Motiv" loading="lazy" />
+              <img src="portfolio-assets/schwabenbraeu-3.jpg" alt="Schwaben Braeu OOH Motiv" loading="lazy" />
+            </div>
+          </section>
+        </div>
+      </article>
 
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">004</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">005</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">006</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">007</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">008</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">009</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">010</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">011</span><span class="title"></span><span class="status">empty</span></a></li>
-          <li><a class="drop empty" href="#" aria-disabled="true"><span class="code">012</span><span class="title"></span><span class="status">empty</span></a></li>
-        </ul>
+      <article class="portfolio-project" id="bosch">
+        <div class="project-copy">
+          <p class="project-count">05</p>
+          <h1>Bosch</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>Edgar Cards / Copy / Die Crew 2023</h2>
+            <div class="project-gallery gallery-posters gallery-row-four">
+              <img src="portfolio-assets/bosch-1.jpg" alt="Bosch Edgar Card" loading="lazy" />
+              <img src="portfolio-assets/bosch-2.jpg" alt="Bosch Edgar Card" loading="lazy" />
+              <img src="portfolio-assets/bosch-3.jpg" alt="Bosch Edgar Card" loading="lazy" />
+              <img src="portfolio-assets/bosch-4.jpg" alt="Bosch Edgar Card" loading="lazy" />
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <article class="portfolio-project" id="lhs-stuttgart">
+        <div class="project-copy">
+          <p class="project-count">06</p>
+          <h1>LHS Stuttgart</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>Edgar Cards / Corona-Impfung / LHS Stuttgart 2022</h2>
+            <div class="project-gallery gallery-wide gallery-contain">
+              <img src="portfolio-assets/lhs-kiste.png" alt="LHS Stuttgart Edgar Card Kiste" loading="lazy" />
+              <img src="portfolio-assets/lhs-nix.png" alt="LHS Stuttgart Edgar Card Nix" loading="lazy" />
+              <img src="portfolio-assets/lhs-reinstecken.png" alt="LHS Stuttgart Edgar Card Reinstecken" loading="lazy" />
+              <img src="portfolio-assets/lhs-stoeffle.png" alt="LHS Stuttgart Edgar Card Stoeffle" loading="lazy" />
+              <img src="portfolio-assets/lhs-subber.png" alt="LHS Stuttgart Edgar Card Subber" loading="lazy" />
+              <img src="portfolio-assets/lhs-verschenga.png" alt="LHS Stuttgart Edgar Card Verschenga" loading="lazy" />
+            </div>
+          </section>
+        </div>
+      </article>
+
+      <article class="portfolio-project" id="deichmann">
+        <div class="project-copy">
+          <p class="project-count">07</p>
+          <h1>Deichmann</h1>
+        </div>
+        <div class="project-body">
+          <section class="work-block">
+            <h2>Longcopy / Arbeit für den KreativKader / 2022</h2>
+            <div class="project-gallery gallery-posters">
+              <img src="portfolio-assets/deichmann-fischer.png" alt="Deichmann Longcopy Fischer" loading="lazy" />
+              <img src="portfolio-assets/deichmann-zuckerberg.png" alt="Deichmann Longcopy Zuckerberg" loading="lazy" />
+              <img src="portfolio-assets/deichmann-jobs.png" alt="Deichmann Longcopy Jobs" loading="lazy" />
+            </div>
+          </section>
+        </div>
+      </article>
+    </section>
+
+    <section id="kontakt" class="portfolio-contact">
+      <img src="portfolio-assets/peter-justen-contact.jpg" alt="Peter Justen" loading="lazy" />
+      <div>
+        <p class="project-count">Kontakt</p>
+        <h1>Peter Justen</h1>
+        <p class="text">Konzepter &amp; Copywriter</p>
+        <div class="contact-details">
+          <p class="text contact-link"><a href="mailto:peter.justen@icloud.com">peter.justen@icloud.com</a></p>
+          <p class="text contact-link"><a href="tel:+4917641699900">0176 41699900</a></p>
+        </div>
       </div>
     </section>
+
     <div class="footer-divider" aria-hidden="true"></div>
-
-
     <div id="sharedFooter"></div>
   </main>
 
+  <script src="portfolio-assets/hls.min.js"></script>
   <script src="fragments.js"></script>
+  <div class="asset-lightbox" aria-hidden="true">
+    <button class="lightbox-close" type="button" aria-label="Große Ansicht schließen">×</button>
+    <img class="lightbox-image" alt="" />
+  </div>
+  <script>
+    function primeVideoThumbnail(video) {
+      const showFrame = () => {
+        if (video.dataset.thumbnailPrimed === "true") return;
+        video.dataset.thumbnailPrimed = "true";
+        try {
+          const preferredTime = Number(video.dataset.thumbnailTime || 0.1);
+          const duration = Number.isFinite(video.duration) ? video.duration : preferredTime + 0.1;
+          const thumbnailTime = Math.min(preferredTime, Math.max(0, duration - 0.1));
+          video.pause();
+          video.currentTime = thumbnailTime;
+        } catch (error) {
+          video.dataset.thumbnailPrimed = "false";
+        }
+      };
+
+      video.addEventListener("play", () => {
+        if (video.dataset.playStarted === "true") return;
+        video.dataset.playStarted = "true";
+        if (video.dataset.thumbnailPrimed === "true" && video.currentTime > 0.05) {
+          video.currentTime = 0;
+        }
+      }, { once: true });
+
+      if (video.readyState >= 1) {
+        showFrame();
+      } else {
+        video.addEventListener("loadedmetadata", showFrame, { once: true });
+      }
+    }
+
+    document.querySelectorAll("video[data-hls]").forEach((video) => {
+      const source = video.dataset.hls;
+      if (!source) return;
+      if (video.canPlayType("application/vnd.apple.mpegurl")) {
+        video.src = source;
+        primeVideoThumbnail(video);
+        return;
+      }
+      if (window.Hls && window.Hls.isSupported()) {
+        const hls = new window.Hls();
+        hls.loadSource(source);
+        hls.attachMedia(video);
+        hls.on(window.Hls.Events.MANIFEST_PARSED, () => primeVideoThumbnail(video));
+      }
+    });
+
+    const lightbox = document.querySelector(".asset-lightbox");
+    const lightboxImage = document.querySelector(".lightbox-image");
+    const lightboxClose = document.querySelector(".lightbox-close");
+
+    function openLightbox(image) {
+      lightboxImage.src = image.currentSrc || image.src;
+      lightboxImage.alt = image.alt || "";
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.classList.add("lightbox-open");
+      lightboxClose.focus();
+    }
+
+    function closeLightbox() {
+      lightbox.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("lightbox-open");
+      lightboxImage.removeAttribute("src");
+      lightboxImage.alt = "";
+    }
+
+    document.querySelectorAll(".project-gallery img").forEach((image) => {
+      image.tabIndex = 0;
+      image.setAttribute("role", "button");
+      image.setAttribute("aria-label", "Große Ansicht öffnen");
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!(event.target instanceof Element)) return;
+      const image = event.target.closest(".project-gallery img");
+      if (image) {
+        openLightbox(image);
+        return;
+      }
+
+      if (event.target === lightbox || event.target === lightboxClose) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && lightbox.getAttribute("aria-hidden") === "false") {
+        closeLightbox();
+        return;
+      }
+
+      if ((event.key === "Enter" || event.key === " ") && event.target.matches(".project-gallery img")) {
+        event.preventDefault();
+        openLightbox(event.target);
+      }
+    });
+  </script>
 </body>
 </html>
