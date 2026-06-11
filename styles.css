@@ -7,7 +7,6 @@
   --surface: #ffffff;
 
   --sans: inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "segoe ui", sans-serif;
-  --typewriter: "sfmono-regular", menlo, monaco, consolas, monospace;
 }
 
 *{ box-sizing: border-box; }
@@ -681,7 +680,7 @@ a:hover{
   .cv-wrap .portfolio-nav,
   .cv-actions,
   .cv-wrap .footer-divider,
-  .cv-wrap #sharedFooter{
+  .cv-wrap .foot{
     display: none;
   }
 
@@ -789,29 +788,4 @@ a:hover{
   a{
     color: inherit;
   }
-}
-
-
-/* Haiku Inline Inputs */
-.slot{
-  display: inline-block;
-  min-width: 6ch;
-  max-width: 18ch;
-  padding: 0 2px;
-  font: inherit;
-  color: inherit;
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--line);
-  outline: none;
-}
-
-.slot.ok{
-  color: #859900;
-  border-bottom-color: #859900;
-}
-
-.slot.bad{
-  color: #dc322f;
-  border-bottom-color: #dc322f;
 }
