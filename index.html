@@ -4,27 +4,25 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ptrjstn - Portfolio</title>
-  <meta name="description" content="Portfolio von Peter Justen, Konzepter und Copywriter." />
+  <meta name="description" content="Portfolio von Peter Justen, Konzeptioner und Texter." />
   <script>
-    if ("scrollRestoration" in history) {
-      history.scrollRestoration = "manual";
-    }
+    const navigationEntry = performance.getEntriesByType("navigation")[0];
+    const isReload = navigationEntry
+      ? navigationEntry.type === "reload"
+      : performance.navigation.type === performance.navigation.TYPE_RELOAD;
 
-    if (window.location.hash) {
-      history.replaceState(null, "", window.location.pathname + window.location.search);
-    }
-
-    function scrollPageToTop() {
-      window.scrollTo(0, 0);
-      document.documentElement.scrollTop = 0;
-      if (document.body) {
-        document.body.scrollTop = 0;
+    if (isReload) {
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
       }
-    }
 
-    scrollPageToTop();
-    window.addEventListener("beforeunload", () => window.scrollTo(0, 0));
-    window.addEventListener("DOMContentLoaded", scrollPageToTop);
+      if (window.location.hash) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
+
+      window.scrollTo(0, 0);
+      window.addEventListener("DOMContentLoaded", () => window.scrollTo(0, 0), { once: true });
+    }
   </script>
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -202,9 +200,8 @@
     <section id="kontakt" class="portfolio-contact">
       <img src="portfolio-assets/peter-justen-contact.jpg" alt="Peter Justen" loading="lazy" />
       <div>
-        <p class="project-count">Kontakt</p>
         <h1>Peter Justen</h1>
-        <p class="text">Konzepter &amp; Copywriter</p>
+        <p class="text contact-role">Konzeptioner &amp; Texter</p>
         <div class="contact-details">
           <p class="text contact-link"><a href="mailto:peter.justen@icloud.com">peter.justen@icloud.com</a></p>
           <p class="text contact-link"><a href="tel:+4917641699900">0176 41699900</a></p>
